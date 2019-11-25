@@ -13,5 +13,15 @@ UCLASS()
 class MULTIPLAYERSAMPLE_API UMyGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
-	
+
+public:
+
+	UMyGameInstance(const FObjectInitializer & ObjectInitializer);
+
+
+	virtual void Init();
+
+
+
+
 };

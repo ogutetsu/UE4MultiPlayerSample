@@ -3,3 +3,14 @@
 
 #include "MyGameInstance.h"
 
+
+UMyGameInstance::UMyGameInstance(const FObjectInitializer & ObjectInitializer)
+{
+	UE_LOG(LogTemp, Warning, TEXT("GameInstance Constructor"));
+
+}
+
+void UMyGameInstance::Init()
+{
+	UE_LOG(LogTemp, Warning, TEXT("GameInstance Init"));
+}
