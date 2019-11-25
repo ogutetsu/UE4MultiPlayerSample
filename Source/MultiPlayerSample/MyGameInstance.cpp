@@ -4,6 +4,7 @@
 #include "MyGameInstance.h"
 
 #include "Engine/Engine.h"
+#include "GameFramework/PlayerController.h"
 
 
 UMyGameInstance::UMyGameInstance(const FObjectInitializer & ObjectInitializer)
@@ -38,6 +39,10 @@ void UMyGameInstance::Join(const FString & Address)
 
 	Engine->AddOnScreenDebugMessage(0, 2, FColor::Green, FString::Printf(TEXT("Joining %s"), *Address));
 
+	APlayerController* PlayerController = GetFirstLocalPlayerController();
+	if (!ensure(PlayerController != nullptr)) return;
+
+	PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 }
 
 
