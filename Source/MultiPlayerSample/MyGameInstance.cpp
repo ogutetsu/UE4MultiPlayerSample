@@ -5,17 +5,47 @@
 
 #include "Engine/Engine.h"
 #include "GameFramework/PlayerController.h"
+#include "ConstructorHelpers.h"
+#include "Blueprint/UserWidget.h"
 
 
 UMyGameInstance::UMyGameInstance(const FObjectInitializer & ObjectInitializer)
 {
-	UE_LOG(LogTemp, Warning, TEXT("GameInstance Constructor"));
+	
+	ConstructorHelpers::FClassFinder<UUserWidget> MenuBPClass(TEXT("/Game/MenuSystem/WBP_MainMenu"));
+	if (!ensure(MenuBPClass.Class != nullptr)) return;
 
+	MenuClass = MenuBPClass.Class;
+
+	
 }
 
 void UMyGameInstance::Init()
 {
-	UE_LOG(LogTemp, Warning, TEXT("GameInstance Init"));
+	UE_LOG(LogTemp, Warning, TEXT("Found class %s"), *MenuClass->GetName());
+}
+
+void UMyGameInstance::LoadMenu()
+{
+	if (!ensure(MenuClass != nullptr)) return;
+
+	UUserWidget* Menu = CreateWidget<UUserWidget>(this, MenuClass);
+
+	if (!ensure(Menu != nullptr)) return;
+
+	Menu->AddToViewport();
+
+	APlayerController* PlayerController = GetFirstLocalPlayerController();
+	if (!ensure(PlayerController != nullptr)) return;
+
+	FInputModeUIOnly InputModeData;
+	InputModeData.SetWidgetToFocus(Menu->TakeWidget());
+	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+
+	PlayerController->SetInputMode(InputModeData);
+
+	PlayerController->bShowMouseCursor = true;
+
 }
 
 void UMyGameInstance::Host()
