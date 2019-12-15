@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "MenuSystem/MenuInterface.h"
 #include "MyGameInstance.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MULTIPLAYERSAMPLE_API UMyGameInstance : public UGameInstance
+class MULTIPLAYERSAMPLE_API UMyGameInstance : public UGameInstance, public IMenuInterface
 {
 	GENERATED_BODY()
 

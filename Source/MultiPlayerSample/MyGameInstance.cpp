@@ -7,6 +7,7 @@
 #include "GameFramework/PlayerController.h"
 #include "ConstructorHelpers.h"
 #include "Blueprint/UserWidget.h"
+#include "MenuSystem/MainMenu.h"
 
 
 UMyGameInstance::UMyGameInstance(const FObjectInitializer & ObjectInitializer)
@@ -29,7 +30,7 @@ void UMyGameInstance::LoadMenu()
 {
 	if (!ensure(MenuClass != nullptr)) return;
 
-	UUserWidget* Menu = CreateWidget<UUserWidget>(this, MenuClass);
+	UMainMenu* Menu = CreateWidget<UMainMenu>(this, MenuClass);
 
 	if (!ensure(Menu != nullptr)) return;
 
@@ -46,6 +47,7 @@ void UMyGameInstance::LoadMenu()
 
 	PlayerController->bShowMouseCursor = true;
 
+	Menu->SetMenuInterface(this);
 }
 
 void UMyGameInstance::Host()
