@@ -58,6 +58,10 @@ void UMyGameInstance::Host()
 
 void UMyGameInstance::Join(const FString & Address)
 {
+	if (Menu != nullptr)
+	{
+		Menu->Teardown();
+	}
 	UEngine* Engine = GetEngine();
 	if (!ensure(Engine != nullptr)) return;
 
