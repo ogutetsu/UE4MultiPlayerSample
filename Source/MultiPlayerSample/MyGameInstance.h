@@ -29,10 +29,13 @@ public:
 
 
 	UFUNCTION(Exec)
-	void Host();
+	void Host() override;
 
 	UFUNCTION(Exec)
-	void Join(const FString& Address);
+	void Join(const FString& Address) override;
+
+
+	void LoadMainMenu() override;
 
 private:
 	TSubclassOf<class UUserWidget> MenuClass;
