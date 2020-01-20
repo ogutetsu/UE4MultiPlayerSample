@@ -18,6 +18,8 @@ class MULTIPLAYERSAMPLE_API UMainMenu : public UMenuWidget
 public:
 	UMainMenu(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 	
+	void SetServerList(TArray<FString> ServerNames);
+
 protected:
 	virtual bool Initialize() override;
 
