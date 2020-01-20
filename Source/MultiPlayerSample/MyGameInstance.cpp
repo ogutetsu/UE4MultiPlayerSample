@@ -42,7 +42,14 @@ void UMyGameInstance::Init()
 			
 			SessionInterface->OnCreateSessionCompleteDelegates.AddUObject(this, &UMyGameInstance::OnCreateSessionComplete);
 			SessionInterface->OnDestroySessionCompleteDelegates.AddUObject(this, &UMyGameInstance::OnDestroySessionComplete);
-			//UE_LOG(LogTemp, Warning, TEXT("Found session interface %s"), *Subsystem->GetSubsystemName().ToString());
+			SessionInterface->OnFindSessionsCompleteDelegates.AddUObject(this, &UMyGameInstance::OnFindSessionsComplete);
+
+			SessionSearch = MakeShareable(new FOnlineSessionSearch());
+			if (SessionSearch.IsValid())
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Starting Find Session"));
+				SessionInterface->FindSessions(0, SessionSearch.ToSharedRef());
+			}
 		}
 	}
 	else
@@ -148,6 +155,11 @@ void UMyGameInstance::OnDestroySessionComplete(FName SessionName, bool Success)
 	{
 		CreateSession();
 	}
+}
+
+void UMyGameInstance::OnFindSessionsComplete(bool Success)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Finished Find Session"));
 }
 
 void UMyGameInstance::CreateSession()
