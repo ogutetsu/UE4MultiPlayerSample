@@ -64,7 +64,6 @@ void UMyGameInstance::Init()
 void UMyGameInstance::LoadMenu()
 {
 	if (!ensure(MenuClass != nullptr)) return;
-
 	Menu = CreateWidget<UMainMenu>(this, MenuClass);
 
 	if (!ensure(Menu != nullptr)) return;

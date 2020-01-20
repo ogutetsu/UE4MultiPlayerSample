@@ -15,13 +15,17 @@ class MULTIPLAYERSAMPLE_API UMainMenu : public UMenuWidget
 {
 	GENERATED_BODY()
 
-	
+public:
+	UMainMenu(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 	
 protected:
 	virtual bool Initialize() override;
 
 
 private:
+
+	TSubclassOf<class UUserWidget> ServerRowClass;
+
 	UPROPERTY(meta = (BindWidget))
 	class UButton* HostButton;
 
@@ -48,7 +52,7 @@ private:
 
 
 	UPROPERTY(meta = (BindWidget))
-	class UEditableTextBox* IPAddressField;
+	class UPanelWidget* ServerList;
 
 
 	UFUNCTION()
