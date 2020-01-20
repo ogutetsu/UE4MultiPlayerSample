@@ -13,6 +13,7 @@
 #include "MenuSystem/MainMenu.h"
 #include "MenuSystem/MenuWidget.h"
 
+const static FName SESSION_NAME = TEXT("My Sesssion Game");
 
 UMyGameInstance::UMyGameInstance(const FObjectInitializer & ObjectInitializer)
 {
@@ -40,6 +41,7 @@ void UMyGameInstance::Init()
 		{
 			
 			SessionInterface->OnCreateSessionCompleteDelegates.AddUObject(this, &UMyGameInstance::OnCreateSessionComplete);
+			SessionInterface->OnDestroySessionCompleteDelegates.AddUObject(this, &UMyGameInstance::OnDestroySessionComplete);
 			//UE_LOG(LogTemp, Warning, TEXT("Found session interface %s"), *Subsystem->GetSubsystemName().ToString());
 		}
 	}
@@ -79,8 +81,15 @@ void UMyGameInstance::Host()
 {
 	if (SessionInterface.IsValid())
 	{
-		FOnlineSessionSettings SessionSettings;
-		SessionInterface->CreateSession(0, TEXT("My Session Game"), SessionSettings);
+		auto ExistingSession = SessionInterface->GetNamedSession(SESSION_NAME);
+		if (ExistingSession != nullptr)
+		{
+			SessionInterface->DestroySession(SESSION_NAME);
+		}
+		else
+		{
+			CreateSession();
+		}
 	}
 }
 
@@ -131,6 +140,23 @@ void UMyGameInstance::OnCreateSessionComplete(FName SessionName, bool Success)
 	if (!ensure(World != nullptr)) return;
 
 	World->ServerTravel("/Game/ThirdPersonCPP/Maps/ThirdPersonExampleMap?listen");
+}
+
+void UMyGameInstance::OnDestroySessionComplete(FName SessionName, bool Success)
+{
+	if (Success)
+	{
+		CreateSession();
+	}
+}
+
+void UMyGameInstance::CreateSession()
+{
+	if (SessionInterface.IsValid())
+	{
+		FOnlineSessionSettings SessionSettings;
+		SessionInterface->CreateSession(0, SESSION_NAME, SessionSettings);
+	}
 }
 
 
