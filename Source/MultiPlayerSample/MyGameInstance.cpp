@@ -13,6 +13,7 @@
 #include "MenuSystem/MenuWidget.h"
 
 const static FName SESSION_NAME = TEXT("My Sesssion Game");
+const static FName SERVER_NAME_SETTINGS_KEY = TEXT("ServerName");
 
 UMyGameInstance::UMyGameInstance(const FObjectInitializer & ObjectInitializer)
 {
@@ -77,8 +78,9 @@ void UMyGameInstance::InGameLoadMenu()
 	Menu->SetMenuInterface(this);
 }
 
-void UMyGameInstance::Host()
+void UMyGameInstance::Host(FString ServerName)
 {
+	DesiredServerName = ServerName;
 	if (SessionInterface.IsValid())
 	{
 		auto ExistingSession = SessionInterface->GetNamedSession(SESSION_NAME);
@@ -172,10 +174,19 @@ void UMyGameInstance::OnFindSessionsComplete(bool Success)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Found Find Session names : %s"), *SearchResult.GetSessionIdStr());
 			FServerData Data;
-			Data.Name = SearchResult.GetSessionIdStr();
+			
 			Data.MaxPlayers = SearchResult.Session.SessionSettings.NumPublicConnections;
 			Data.CurrentPlayers = Data.MaxPlayers - SearchResult.Session.NumOpenPublicConnections;
 			Data.HostUsername = SearchResult.Session.OwningUserName;
+			FString ServerName;
+			if (SearchResult.Session.SessionSettings.Get(SERVER_NAME_SETTINGS_KEY, ServerName))
+			{
+				Data.Name = ServerName;
+			}
+			else
+			{
+				Data.Name = "Could not find name.";
+			}
 			ServerNames.Add(Data);
 		}
 
@@ -224,6 +235,7 @@ void UMyGameInstance::CreateSession()
 		SessionSettings.NumPublicConnections = 2;
 		SessionSettings.bShouldAdvertise = true;
 		SessionSettings.bUsesPresence = true;
+		SessionSettings.Set(SERVER_NAME_SETTINGS_KEY, DesiredServerName, EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
 		
 		SessionInterface->CreateSession(0, SESSION_NAME, SessionSettings);
 	}
