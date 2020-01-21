@@ -12,7 +12,11 @@ void ALobbyGameMode::PostLogin(APlayerController* NewPlayer)
 
 	if (NumberOfPlayers >= 3)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Reached 3 players!"));
+		UWorld* World = GetWorld();
+		if (!ensure(World != nullptr)) return;
+
+		bUseSeamlessTravel = true;
+		World->ServerTravel("/Game/Platforms/Maps/Game?listen");
 	}
 }
 
