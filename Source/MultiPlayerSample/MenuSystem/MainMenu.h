@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -19,6 +19,8 @@ public:
 	UMainMenu(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 	
 	void SetServerList(TArray<FString> ServerNames);
+
+	void SelectIndex(uint32 Index);
 
 protected:
 	virtual bool Initialize() override;
@@ -71,5 +73,7 @@ private:
 	UFUNCTION()
 	void QuitPressed();
 	
+	TOptional<uint32> SelectedIndex;
+
 	
 };

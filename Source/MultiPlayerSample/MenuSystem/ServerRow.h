@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -19,4 +19,18 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* ServerName;
 	
+	void Setup(class UMainMenu* InParent, uint32 InIndex);
+
+private:
+	UPROPERTY(meta = (BindWidget))
+	class UButton* RowButton;
+
+	UPROPERTY()
+	class UMainMenu* Parent;
+
+	uint32 Index;
+
+	UFUNCTION()
+	void OnClicked();
+
 };
