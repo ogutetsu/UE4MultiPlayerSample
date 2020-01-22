@@ -29,8 +29,17 @@ public:
 
 private:
 
+	UPROPERTY(EditAnywhere)
+	float Mass = 1000;
+
+	UPROPERTY(EditAnywhere)
+	float MaxDrivingForce = 10000;
+
+
 	void MoveForward(float Value);
 
 	FVector Velocity;
+
+	float Throttle;
 
 };
