@@ -69,11 +69,13 @@ public:
 
 
 private:
+	void SimulateMove(FGoKartMove Move);
+
 	FVector GetAirResistance();
 	FVector GetRollingResistance();
 
 	void UpdateLocationFromVelocity(float DeltaTime);
-	void ApplyRotation(float DeltaTime);
+	void ApplyRotation(float DeltaTime, float SteeringThrow);
 
 	UPROPERTY(EditAnywhere)
 	float Mass = 1000;
@@ -110,9 +112,7 @@ private:
 	UPROPERTY(Replicated)
 	FRotator ReplicatedRotation;
 
-	UPROPERTY(Replicated)
 	float Throttle;
-	UPROPERTY(Replicated)
 	float SteeringThrow;
 
 
