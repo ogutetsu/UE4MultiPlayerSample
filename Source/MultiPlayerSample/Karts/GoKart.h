@@ -29,7 +29,8 @@ public:
 
 
 private:
-	FVector GetResistance();
+	FVector GetAirResistance();
+	FVector GetRollingResistance();
 
 	void UpdateLocationFromVelocity(float DeltaTime);
 	void ApplyRotation(float DeltaTime);
@@ -46,6 +47,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float DragCoefficient = 16;
+
+	UPROPERTY(EditAnywhere)
+	float RollingCoefficient = 0.015;
 
 
 	void MoveForward(float Value);
