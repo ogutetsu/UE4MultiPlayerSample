@@ -23,6 +23,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -30,6 +31,7 @@ public:
 private:
 
 	void UpdateLocationFromVelocity(float DeltaTime);
+	void ApplyRotation(float DeltaTime);
 
 	UPROPERTY(EditAnywhere)
 	float Mass = 1000;
@@ -37,11 +39,17 @@ private:
 	UPROPERTY(EditAnywhere)
 	float MaxDrivingForce = 10000;
 
+	//degree/second
+	UPROPERTY(EditAnywhere)
+	float MaxDegreesPerSecond = 90;
+
 
 	void MoveForward(float Value);
+	void MoveRight(float Value);
 
 	FVector Velocity;
 
 	float Throttle;
+	float SteeringThrow;
 
 };
