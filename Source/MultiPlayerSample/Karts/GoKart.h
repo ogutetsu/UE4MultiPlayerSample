@@ -21,6 +21,8 @@ protected:
 
 public:	
 
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+
 	FString GetEnumText(ENetRole Role);
 
 	// Called every frame
@@ -65,6 +67,11 @@ private:
 	void Server_MoveRight(float Value);
 
 	FVector Velocity;
+
+	UPROPERTY(Replicated)
+	FVector ReplicatedLocation;
+	UPROPERTY(Replicated)
+	FRotator ReplicatedRotation;
 
 	float Throttle;
 	float SteeringThrow;
