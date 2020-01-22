@@ -29,6 +29,7 @@ public:
 
 
 private:
+	FVector GetResistance();
 
 	void UpdateLocationFromVelocity(float DeltaTime);
 	void ApplyRotation(float DeltaTime);
@@ -42,6 +43,9 @@ private:
 	//degree/second
 	UPROPERTY(EditAnywhere)
 	float MaxDegreesPerSecond = 90;
+
+	UPROPERTY(EditAnywhere)
+	float DragCoefficient = 16;
 
 
 	void MoveForward(float Value);
