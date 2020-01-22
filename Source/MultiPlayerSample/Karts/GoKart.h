@@ -29,6 +29,8 @@ public:
 
 private:
 
+	void UpdateLocationFromVelocity(float DeltaTime);
+
 	UPROPERTY(EditAnywhere)
 	float Mass = 1000;
 
