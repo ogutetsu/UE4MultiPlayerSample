@@ -35,6 +35,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
+	UFUNCTION(BlueprintGetter)
+	UGoKartMovementReplicator* GetMovementReplicator() { return MovementReplicator; }
+
+
 private:
 	
 	
@@ -43,8 +47,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	UGoKartMovementComponent* MovementComponent;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintGetter = GetMovementReplicator)
 	UGoKartMovementReplicator* MovementReplicator;
 
-
+	
 };
