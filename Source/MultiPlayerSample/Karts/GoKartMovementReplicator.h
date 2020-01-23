@@ -48,6 +48,7 @@ private:
 
 	void ClearAcknowledgeMoves(FGoKartMove LastMove);
 
+	void UpdateServerState(const FGoKartMove& Move);
 
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
