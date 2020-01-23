@@ -5,23 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "GoKartMovementComponent.h"
+#include "GoKartMovementReplicator.h"
 #include "GoKart.generated.h"
-
-
-
-USTRUCT()
-struct FGoKartState
-{
-	GENERATED_USTRUCT_BODY()
-
-	UPROPERTY()
-	FTransform Transform;
-	UPROPERTY()
-	FVector Velocity;
-
-	UPROPERTY()
-	FGoKartMove LastMove;
-};
 
 
 
@@ -40,8 +25,6 @@ protected:
 
 public:	
 
-	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
-
 	FString GetEnumText(ENetRole Role);
 
 	// Called every frame
@@ -54,29 +37,14 @@ public:
 
 private:
 	
-	void ClearAcknowledgeMoves(FGoKartMove LastMove);
-
 	
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 
-	UFUNCTION(Server, Reliable, WithValidation)
-	void Server_SendMove(FGoKartMove Move);
-
-
-	UPROPERTY(ReplicatedUsing = OnRep_ServerState)
-	FGoKartState ServerState;
-
-	UFUNCTION()
-	void OnRep_ServerState();
-
-	UPROPERTY(Replicated)
-	FRotator ReplicatedRotation;
-
-
-	TArray<FGoKartMove> UnacknowledgedMoves;
-
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere)
 	UGoKartMovementComponent* MovementComponent;
+	UPROPERTY(VisibleAnywhere)
+	UGoKartMovementReplicator* MovementReplicator;
+
 
 };
