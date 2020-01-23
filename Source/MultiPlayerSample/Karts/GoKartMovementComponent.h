@@ -44,8 +44,6 @@ public:
 
 	void SimulateMove(const FGoKartMove& Move);
 
-	FGoKartMove CreateMove(float DeltaTime);
-
 	FVector GetVelocity() { return Velocity; }
 	void SetVelocity(FVector Value) { Velocity = Value; }
 
@@ -56,6 +54,8 @@ public:
 
 
 private:
+
+	FGoKartMove CreateMove(float DeltaTime);
 
 	FVector GetAirResistance();
 	FVector GetRollingResistance();
